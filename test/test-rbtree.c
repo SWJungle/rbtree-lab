@@ -56,7 +56,7 @@ void test_erase_root(const key_t key) {
   delete_rbtree(t);
 }
 
-static void insert_arr(const rbtree *t, const key_t *arr, const size_t n) {
+static void insert_arr(rbtree *t, const key_t *arr, const size_t n) {
   for (size_t i = 0; i < n; i++) {
     rbtree_insert(t, arr[i]);
   }

@@ -1,9 +1,9 @@
 #include "rbtree.h"
 
-#include <malloc.h>
+#include <stdlib.h>
 
 rbtree *new_rbtree(void) {
-  rbtree *p = (rbtree *)calloc(sizeof(rbtree), 1);
+  rbtree *p = (rbtree *)calloc(1, sizeof(rbtree));
   return p;
 }
 

@@ -1,9 +1,9 @@
 #include "rbtree.h"
 
-#include <malloc.h>
+#include <stdlib.h>
 
 rbtree *new_rbtree(void) {
-  rbtree *p = (rbtree *)calloc(sizeof(rbtree), 1);
+  rbtree *p = (rbtree *)calloc(1, sizeof(rbtree));
   return p;
 }
 
@@ -12,7 +12,7 @@ void delete_rbtree(rbtree *t) {
   free(t);
 }
 
-node_t *rbtree_insert(const rbtree *t, const key_t key) {
+node_t *rbtree_insert(rbtree *t, const key_t key) {
   // TODO: implement insert
   return t->root;
 }
@@ -32,7 +32,7 @@ node_t *rbtree_max(const rbtree *t) {
   return t->root;
 }
 
-int rbtree_erase(const rbtree *t, node_t *p) {
+int rbtree_erase(rbtree *t, node_t *p) {
   // TODO: implement erase
   return 0;
 }

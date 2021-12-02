@@ -4,6 +4,7 @@ CFLAGS=-I ../src -Wall -g
 
 test: test-rbtree
 	./test-rbtree
+	valgrind ./test-rbtree
 
 test-rbtree: test-rbtree.o ../src/rbtree.o
 

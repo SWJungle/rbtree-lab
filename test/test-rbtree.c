@@ -109,8 +109,7 @@ void test_minmax(key_t *arr, const size_t n) {
   delete_rbtree(t);
 }
 
-void test_to_array(const key_t *arr, const size_t n) {
-  rbtree *t = new_rbtree();
+void test_to_array(rbtree *t, const key_t *arr, const size_t n) {
   assert(t != NULL);
 
   insert_arr(t, arr, n);
@@ -121,8 +120,38 @@ void test_to_array(const key_t *arr, const size_t n) {
   for (int i = 0; i < n; i++) {
     assert(arr[i] == res[i]);
   }
+}
 
-  delete_rbtree(t);
+void test_multi_instance() {
+  rbtree *t1 = new_rbtree();
+  assert(t1 != NULL);
+  rbtree *t2 = new_rbtree();
+  assert(t2 != NULL);
+
+  key_t arr1[] = {10, 5, 8, 34, 67, 23, 156, 24, 2, 12, 24, 36, 990, 25};
+  const size_t n1 = sizeof(arr1) / sizeof(arr1[0]);
+  insert_arr(t1, arr1, n1);
+  qsort((void *)arr1, n1, sizeof(key_t), comp);
+
+  key_t arr2[] = {4, 8, 10, 5, 3};
+  const size_t n2 = sizeof(arr2) / sizeof(arr2[0]);
+  insert_arr(t2, arr2, n2);
+  qsort((void *)arr2, n2, sizeof(key_t), comp);
+
+  key_t *res1 = calloc(n1, sizeof(key_t));
+  rbtree_to_array(t1, res1, n1);
+  for (int i = 0; i < n1; i++) {
+    assert(arr1[i] == res1[i]);
+  }
+
+  key_t *res2 = calloc(n2, sizeof(key_t));
+  rbtree_to_array(t2, res2, n2);
+  for (int i = 0; i < n2; i++) {
+    assert(arr2[i] == res2[i]);
+  }
+
+  delete_rbtree(t2);
+  delete_rbtree(t1);
 }
 
 // Search tree constraint
@@ -218,12 +247,14 @@ void test_rb_constraints(const key_t arr[], const size_t n) {
   delete_rbtree(t);
 }
 
+// rbtree should manage distinct values
 void test_distinct_values() {
   const key_t entries[] = {10, 5, 8, 34, 67, 23, 156, 24, 2, 12};
   const size_t n = sizeof(entries) / sizeof(entries[0]);
   test_rb_constraints(entries, n);
 }
 
+// rbtree should manage values with duplicate
 void test_duplicate_values() {
   const key_t entries[] = {10, 5, 5, 34, 6, 23, 12, 12, 6, 12};
   const size_t n = sizeof(entries) / sizeof(entries[0]);
@@ -236,13 +267,26 @@ void test_minmax_suite() {
   test_minmax(entries, n);
 }
 
+void test_to_array_suite () {
+  rbtree *t = new_rbtree();
+  assert(t != NULL);
+
+  key_t entries[] = {10, 5, 8, 34, 67, 23, 156, 24, 2, 12, 24, 36, 990, 25};
+  const size_t n = sizeof(entries) / sizeof(entries[0]);
+  test_to_array(t, entries, n);
+
+  delete_rbtree(t);
+}
+
 int main(void) {
   test_init();
   test_insert_single(1024);
   test_find_single(512, 1024);
   test_erase_root(128);
   test_minmax_suite();
+  test_to_array_suite();
   test_distinct_values();
   test_duplicate_values();
+  test_multi_instance();
   printf("Passed all tests!\n");
 }

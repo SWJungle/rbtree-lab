@@ -1,5 +1,5 @@
-#ifndef RBTREE_H_
-#define RBTREE_H_
+#ifndef _RBTREE_H_
+#define _RBTREE_H_
 
 #include <stddef.h>
 
@@ -15,6 +15,7 @@ typedef struct node_t {
 
 typedef struct {
   node_t *root;
+  node_t *nil;  // for sentinel
 } rbtree;
 
 rbtree *new_rbtree(void);
@@ -28,4 +29,4 @@ int rbtree_erase(rbtree *, node_t *);
 
 int rbtree_to_array(const rbtree *, key_t *, const size_t);
 
-#endif  // RBTREE_H_
+#endif  // _RBTREE_H_

@@ -28,11 +28,12 @@ void test_insert_single(const key_t key) {
 #ifdef SENTINEL
   assert(p->left == t->nil);
   assert(p->right == t->nil);
+  assert(p->parent == t->nil);
 #else
   assert(p->left == NULL);
   assert(p->right == NULL);
-#endif
   assert(p->parent == NULL);
+#endif
   delete_rbtree(t);
 }
 

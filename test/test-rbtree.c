@@ -138,6 +138,7 @@ void test_to_array(rbtree *t, const key_t *arr, const size_t n) {
   for (int i = 0; i < n; i++) {
     assert(arr[i] == res[i]);
   }
+  free(res);
 }
 
 void test_multi_instance() {
@@ -168,6 +169,8 @@ void test_multi_instance() {
     assert(arr2[i] == res2[i]);
   }
 
+  free(res1);
+  free(res2);
   delete_rbtree(t2);
   delete_rbtree(t1);
 }
